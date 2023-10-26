@@ -1,13 +1,11 @@
 package me.sebarijol15.lootboxes.Commands;
 
 import me.sebarijol15.lootboxes.Util.FileManager;
-import me.sebarijol15.lootboxes.Util.HexUtil;
 import me.sebarijol15.lootboxes.Util.SubCommand;
 import org.bukkit.entity.Player;
 
 public class ReloadCommand extends SubCommand {
-    private FileManager fileManager;
-    private HexUtil hexUtil = new HexUtil();
+    private final FileManager fileManager;
 
     public ReloadCommand(FileManager fileManager) {
         this.fileManager = fileManager;

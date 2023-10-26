@@ -1,9 +1,8 @@
 package me.sebarijol15.lootboxes.Util;
 
-import me.sebarijol15.lootboxes.Commands.CreateCommand;
-import me.sebarijol15.lootboxes.Commands.GUICommand;
 import me.sebarijol15.lootboxes.Commands.GetCommand;
 import me.sebarijol15.lootboxes.Commands.ReloadCommand;
+import me.sebarijol15.lootboxes.LootBoxes;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -13,16 +12,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class CommandManager implements TabExecutor {
-    private ArrayList<SubCommand> subCommands = new ArrayList<>();
-    private LootboxManager lootboxManager;
-    public CommandManager(FileManager fileManager) {
-        lootboxManager = new LootboxManager();
-        subCommands.add(new GetCommand());
-        subCommands.add(new CreateCommand());
-        subCommands.add(new GUICommand());
+    private final FileManager fileManager;
+    private final ArrayList<SubCommand> subCommands = new ArrayList<>();
+    public CommandManager(LootBoxes plugin, FileManager fileManager, LootboxItem lootbox) {
+        subCommands.add(new GetCommand(fileManager, lootbox));
         subCommands.add(new ReloadCommand(fileManager));
+        this.fileManager = fileManager;
     }
 
     @Override
@@ -56,19 +54,15 @@ public class CommandManager implements TabExecutor {
                 }
             }
         }
-        if (args[0].equalsIgnoreCase("get")) {
-            suggestions.addAll(lootboxManager.getAvailableLootboxes());
+
+        if (args[0].equals("get")) {
+            suggestions.addAll(getAvailableLootboxes(fileManager));
         }
 
         return suggestions.isEmpty() ? null : suggestions;
     }
 
-    private SubCommand getSubCommandByName(String name) {
-        for (SubCommand subCommand : subCommands) {
-            if (subCommand.getName().equalsIgnoreCase(name)) {
-                return subCommand;
-            }
-        }
-        return null;
+    public Set<String> getAvailableLootboxes(FileManager fileManager) {
+        return fileManager.getLootboxConfig().getKeys(false);
     }
 }

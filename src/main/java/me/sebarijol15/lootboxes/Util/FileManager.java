@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class FileManager {
     private final JavaPlugin plugin;
-    private File lootboxFile;
-    private File messagesFile;
+    private final File lootboxFile;
+    private final File messagesFile;
     private FileConfiguration lootboxConfig;
     private FileConfiguration messagesConfig;
 

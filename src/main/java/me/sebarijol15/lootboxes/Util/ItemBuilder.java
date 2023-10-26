@@ -3,27 +3,32 @@ package me.sebarijol15.lootboxes.Util;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.codehaus.plexus.util.Base64;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ItemBuilder {
-    private HexUtil hexUtil = new HexUtil();
-    private int amount;
+    private final HexUtil hexUtil = new HexUtil();
     private ItemStack itemStack;
     private String displayName;
     private String localizedName;
-    private List<String> lore;
+    private final List<String> lore;
+    private final PersistentDataContainer persistentDataContainer;
 
     public ItemBuilder(Material material) {
         this.itemStack = new ItemStack(material);
         this.lore = new ArrayList<>();
+        this.persistentDataContainer = itemStack.getItemMeta().getPersistentDataContainer();
     }
 
     public ItemBuilder setDisplayName(String displayName) {
@@ -46,6 +51,15 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setPersistentData(NamespacedKey key, PersistentDataType<String, String> type, String value) {
+        this.persistentDataContainer.set(key, type, value);
+        return this;
+    }
+
+    public PersistentDataContainer getPersistentDataContainer() {
+        return persistentDataContainer;
+    }
+
     public ItemStack toItemStack() {
         ItemMeta meta = itemStack.getItemMeta();
         if (displayName != null) {
@@ -58,7 +72,20 @@ public class ItemBuilder {
             meta.setLore(lore);
         }
 
+        // Set the modified ItemMeta to the ItemStack
         itemStack.setItemMeta(meta);
+
+        // Apply the PersistentDataContainer to the modified ItemMeta
+        PersistentDataContainer itemMetaContainer = meta.getPersistentDataContainer();
+        for (NamespacedKey key : persistentDataContainer.getKeys()) {
+            String value = persistentDataContainer.get(key, PersistentDataType.STRING);
+            itemMetaContainer.set(key, PersistentDataType.STRING, value);
+        }
+
+        // Set the modified ItemMeta back to the ItemStack
+        itemStack.setItemMeta(meta);
+
+        // Return the modified ItemStack
         return itemStack;
     }
 
