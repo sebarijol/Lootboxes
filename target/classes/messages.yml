@@ -1,0 +1,9 @@
+# Lootbox messages file
+
+rightClickToOpen: '&#878165Clic derecho para abrir'
+shiftRightClickToViewContents: '&#878165Shift + Clic derecho ver contenidos'
+lootboxOpen: '&#878165¡Lootbox abierta!'
+
+# Inside the GUIs
+id: "&#878165ID: "
+clickToEdit: "&#878165Clic para editar"

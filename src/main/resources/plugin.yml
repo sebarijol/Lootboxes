@@ -1,0 +1,7 @@
+name: LootBoxes
+version: '${project.version}'
+main: me.sebarijol15.lootboxes.LootBoxes
+api-version: '1.20'
+commands:
+  lootbox:
+    description: Lootbox

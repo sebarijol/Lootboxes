@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LootBoxes:jar">
+    <output-path>$PROJECT_DIR$/../../Minecraft Test Server/plugins</output-path>
+    <root id="archive" name="LootBoxes.jar">
+      <element id="module-output" name="LootBoxes" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,18 @@
+# Lootbox File
+# The contents come in the following format:
+# Contents:
+#   - MATERIAL;AMOUNT;PROBABILITY
+
+examplelootbox:
+  name: "&#878165Caja de cartón"
+  texture: http://textures.minecraft.net/texture/543f5ed19f634370dd9c5b9e8772c06f9917a3cf1c69b4433a5243b058d2d44c
+  contents:
+    - DIAMOND;2;20
+    - RAW_IRON;3;70
+    - RAW_GOLD;4;80
+crimsonlootbox:
+  name: '&#821d27Caja Carmesí'
+  texture: http://textures.minecraft.net/texture/fe055f860bcc9a5760fb876463b42092c64001bb9d427abffd1c7e2f0d462779
+  contents:
+    - NETHERRACK;32;90
+    - NETHERITE_INGOT;1;5
